@@ -1,0 +1,22 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-education",
+      "description": "Student studying with a laptop",
+      "imageUrl": "https://picsum.photos/seed/edu1/1200/800",
+      "imageHint": "education student"
+    },
+    {
+      "id": "empty-courses",
+      "description": "Empty bookshelf illustration",
+      "imageUrl": "https://picsum.photos/seed/empty1/400/300",
+      "imageHint": "empty shelf"
+    },
+    {
+      "id": "grading-illustration",
+      "description": "AI grading illustration",
+      "imageUrl": "https://picsum.photos/seed/grade1/600/400",
+      "imageHint": "artificial intelligence"
+    }
+  ]
+}
