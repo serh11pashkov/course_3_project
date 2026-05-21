@@ -351,7 +351,7 @@ export default function StudentDashboard() {
                   </p>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-6">
                   {recentSubmissions.map((sub) => (
                     <Link href={`/submissions/${sub.id}`} key={sub.id}>
                       <Card className="hover:shadow-md transition-all border-0 shadow-sm hover:bg-blue-50/50">

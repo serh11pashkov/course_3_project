@@ -178,7 +178,9 @@ export default function SubmissionDetailsPage({
                       rel="noreferrer"
                     >
                       <Download className="w-4 h-4" />
-                      Переглянути мою роботу
+                      {isTeacher
+                        ? "Переглянути роботу студента"
+                        : "Переглянути мою роботу"}
                     </a>
                   </Button>
                 ) : null}
@@ -266,7 +268,7 @@ export default function SubmissionDetailsPage({
                                 return (
                                   <div
                                     key={idx}
-                                    className="grid grid-cols-1 md:grid-cols-4 gap-2 items-end"
+                                    className="grid grid-cols-1 md:grid-cols-[minmax(0,1.1fr)_120px_minmax(0,2.4fr)] gap-3 items-start"
                                   >
                                     <input
                                       type="hidden"
@@ -278,12 +280,12 @@ export default function SubmissionDetailsPage({
                                       name={`criterion_max_${idx}`}
                                       defaultValue={c.maxScore}
                                     />
-                                    <div className="md:col-span-2">
-                                      <Label className="text-xs">
+                                    <div className="min-w-0 pt-7">
+                                      <Label className="text-xs break-words leading-5">
                                         {c.name}
                                       </Label>
                                     </div>
-                                    <div>
+                                    <div className="w-full">
                                       <Label className="text-xs">Бал</Label>
                                       <Input
                                         name={`criterion_score_${idx}`}
@@ -296,17 +298,18 @@ export default function SubmissionDetailsPage({
                                         max={c.maxScore}
                                       />
                                     </div>
-                                    <div>
+                                    <div className="w-full">
                                       <Label className="text-xs">
                                         Коментар
                                       </Label>
-                                      <Input
+                                      <Textarea
                                         name={`criterion_comment_${idx}`}
                                         defaultValue={
                                           teacherBreak?.comment ??
                                           aiBreak?.comment ??
                                           ""
                                         }
+                                        className="min-h-[5.5rem] w-full resize-y"
                                       />
                                     </div>
                                   </div>
@@ -367,20 +370,20 @@ export default function SubmissionDetailsPage({
                   </CardHeader>
                   <CardContent>
                     {submission.teacherComment ? (
-                      <div className="space-y-2">
-                        <p className="text-foreground leading-relaxed">
-                          {submission.teacherComment}
-                        </p>
-                        <div className="flex items-center gap-2 text-xs text-green-600 font-medium">
+                      <div className="space-y-3">
+                        <div className="p-4 bg-white rounded-md shadow-sm">
+                          <p className="text-lg text-foreground leading-relaxed whitespace-pre-line">
+                            {submission.teacherComment}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-green-600 font-semibold">
                           <CheckCircle2 className="w-4 h-4" />
                           Затверджено викладачем
                         </div>
                       </div>
                     ) : (
                       <div className="text-center py-6 text-muted-foreground bg-muted/30 rounded-lg">
-                        <p className="text-sm">
-                          Очікується перевірка викладачем.
-                        </p>
+                        <p className="text-sm">Очікується перевірка.</p>
                       </div>
                     )}
                   </CardContent>

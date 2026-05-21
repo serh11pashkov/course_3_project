@@ -382,7 +382,7 @@ export default function TeacherDashboard() {
                   </CardContent>
                 </Card>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {submissions
                     .slice()
                     .reverse()

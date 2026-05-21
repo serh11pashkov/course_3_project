@@ -93,7 +93,7 @@ export default function RegisterPage() {
               Створити акаунт
             </CardTitle>
             <CardDescription>
-              Створіть акаунт через email і пароль або використайте Google
+              Створіть акаунт через email і пароль
             </CardDescription>
           </CardHeader>
           <form
@@ -162,26 +162,13 @@ export default function RegisterPage() {
                 <p className="text-sm text-destructive">{error}</p>
               ) : null}
             </CardContent>
-            <CardFooter className="flex flex-col gap-4">
+            <CardFooter className="flex flex-col gap-2">
               <Button
                 type="submit"
                 disabled={submitting}
                 className="w-full h-11 text-lg rounded-xl"
               >
                 {submitting ? "Створюємо акаунт…" : "Зареєструватися"}
-              </Button>
-              <div className="w-full flex items-center gap-3 text-xs uppercase text-muted-foreground">
-                <span className="h-px flex-1 bg-border" />
-                або
-                <span className="h-px flex-1 bg-border" />
-              </div>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-                className="w-full h-11 text-lg rounded-xl"
-              >
-                Продовжити через Google
               </Button>
               <p className="text-sm text-center text-muted-foreground">
                 Вже маєте акаунт?{" "}

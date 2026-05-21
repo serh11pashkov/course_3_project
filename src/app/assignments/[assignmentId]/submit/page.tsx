@@ -21,6 +21,36 @@ import {
   FileText,
   CalendarDays,
 } from "lucide-react";
+
+function formatFileType(fileName?: string, mime?: string) {
+  // Prefer extension from fileName
+  try {
+    if (fileName) {
+      const parts = fileName.split(".");
+      if (parts.length > 1) {
+        return parts.pop()?.toLowerCase() || "Файл";
+      }
+    }
+  } catch {}
+
+  // Fallback to common mime -> extension mapping
+  if (mime) {
+    const map: Record<string, string> = {
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        "docx",
+      "application/msword": "doc",
+      "application/pdf": "pdf",
+      "text/plain": "txt",
+      "application/zip": "zip",
+    };
+    const normalized = mime.toLowerCase();
+    let ext = map[normalized] || normalized.split("/").pop() || "Файл";
+    if (ext && !ext.startsWith(".")) ext = `.${ext}`;
+    return ext;
+  }
+
+  return "Файл";
+}
 import {
   createSubmission,
   attachUploadAndGrade,
@@ -340,6 +370,22 @@ export default function SubmitAssignmentPage() {
                           {new Date(assignment.dueDate).toLocaleString("uk-UA")}
                         </p>
                       ) : null}
+                      {/** Download link for teacher-provided attachment (if any) */}
+                      {assignment?.attachmentFileName ||
+                      assignment?.attachmentText ? (
+                        <p className="mt-2">
+                          <a
+                            href={`/api/assignments/${assignmentId}/file`}
+                            className="text-sm text-primary font-medium hover:underline"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Завантажити прикріплений файл:{" "}
+                            {assignment.attachmentFileName ||
+                              `${assignment.title || "assignment"}.txt`}
+                          </a>
+                        </p>
+                      ) : null}
                     </div>
                   ) : (
                     <p className="text-destructive text-sm">
@@ -430,7 +476,10 @@ export default function SubmitAssignmentPage() {
                                           {item.fileName}
                                         </p>
                                         <p className="text-xs text-muted-foreground uppercase">
-                                          {item.fileType || "Файл"}
+                                          {formatFileType(
+                                            item.fileName,
+                                            item.fileType,
+                                          )}
                                         </p>
                                         <p className="text-xs text-muted-foreground">
                                           Від: {item.studentName ?? "Студент"}
